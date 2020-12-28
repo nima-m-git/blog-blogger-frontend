@@ -1,49 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 
-const BEURL = 'https://still-eyrie-61337.herokuapp.com';
+import Menu from './Menu';
+import Login from './Login';
+
 
 const App = () => {
-  const [filteredPosts, setFilteredPosts] = useState(null);
-  const [posts, setPosts] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState(null);
+  const [token, setToken] = useState(null);
+  const [username, setUsername] = useState(null);
 
-
-  useEffect(() => {
-    fetch(`${BEURL}/posts`)
-      .then(res => res.json())
-      .then((result) => {
-        setIsLoaded(true);
-        setPosts(result)
-      },
-      (error) => {
-        setIsLoaded(true);
-        setError(error)
+  return (
+    <div>
+      <h1>Blogger Home</h1>
+      {(token) 
+      ? <Menu {...{token}} {...{username}}/>
+      : <Login {...{setToken}} {...{setUsername}}/>
       }
-      )
-  }, [])
-
-  if (error) {
-    return <div>Error: {error.message}</div>
-  } else if (!isLoaded) {
-    return <div>Loading...</div>
-  } else {
-
-    return (
-      <div>
-        <FilterBar {...setFilter}/>
-        <div className='posts-container'>
-          {posts.filter(FILTERHERE).map(post => 
-            <Post {...filteredPosts || posts}/>)}
-        </div>
-
-      </div>
-    )
-  }
-
-
-
+    </div>
+  )
 }
 
 
