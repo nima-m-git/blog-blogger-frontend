@@ -30,7 +30,7 @@ const Post = ({ post, post: { title, id, content, author, comment, timeCreated, 
                     By {author}
                 </h3>
                 <div className='comments'>
-                    Comments ({comment.length})
+                    Comments ({comment?.length || 0})
                 </div>
                 <div className='created'>
                     Created: {timeCreated}

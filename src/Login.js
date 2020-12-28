@@ -5,8 +5,6 @@ const Login = ({ setToken, setUsername, }) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null)
 
-    console.log(setToken)
-
     const checkCredentials = (e) => {
         e.preventDefault();
         fetch(process.env.REACT_APP_BE_URL + '/users/login', {
@@ -18,7 +16,6 @@ const Login = ({ setToken, setUsername, }) => {
         })
             .then(res => res.json())
             .then(result => {
-                console.log(result)
                 if (result.token) {
                     setToken(result.token);
                     setUsername(result.username);

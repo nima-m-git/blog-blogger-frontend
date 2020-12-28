@@ -5,12 +5,15 @@ import Post from './Post';
 import PostForm from './PostForm';
 
 const Menu = ({ token, username, }) => {
-    const [filter, setFilter] = useState(null);
+    const [filters, setFilters] = useState(null);
     const [posts, setPosts] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(null);
     const [message, setMessage] = useState(null);
     const [formActive, setFormActive] = useState(false);
+
+    // console.log(filters)
+
     const headers = {
         'Authorization': `Bearer ${token}`,
     }
@@ -18,19 +21,19 @@ const Menu = ({ token, username, }) => {
     const filterPosts = () => {
       let filtered = [...posts];
   
-      if (filter.viewAll === false || !filter) {
+      if (!filters || filters.viewAll === false) {
         filtered = [];
       } else {
   
-        if (filter.usersPosts === true) {
+        if (filters.usersPosts === true) {
           filtered = filtered.filter(post => post.author === username);
-        } else if (filter.userPosts === false) {
+        } else if (filters.userPosts === false) {
           filtered = filtered.filter(post => post.author !== username);
         }
   
-        if (filter.published === true) {
+        if (filters.published === true) {
           filtered = filtered.filter(post => post.published);
-        } else if (filter.published === false) {
+        } else if (filters.published === false) {
           filtered = filtered.filter(post => !post.published)
         }
       }
@@ -38,7 +41,7 @@ const Menu = ({ token, username, }) => {
     }
 
     const newPost = (post) => {
-        fetch(`${process.env.BE_URL}/posts/`, {
+        fetch(`${process.env.REACT_APP_BE_URL}/posts/`, {
             method: 'POST',
             body: post,
             headers,
@@ -50,14 +53,14 @@ const Menu = ({ token, username, }) => {
   
     
     useEffect(() => {
-      fetch(`${process.env.BE_URL}/posts`)
+      fetch(`${process.env.REACT_APP_BE_URL}/posts`)
         .then(res => res.json())
         .then((result) => {
+          setPosts(result.posts)
           setIsLoaded(true);
-          setPosts(result)
         }, (error) => {
-            setIsLoaded(true);
             setError(error)
+            setIsLoaded(true);
           }
         )
     }, [])
@@ -68,20 +71,19 @@ const Menu = ({ token, username, }) => {
       } else if (!isLoaded) {
         return <div>Loading...</div>
       } else {
-    
         return (
           <div>
             <button onClick={() => setFormActive(true)}>New Post</button>
-            <FilterBar {...setFilter}/>
+            <FilterBar {...{setFilters}} {...{filters}}/>
             <div className='posts-container'>
               {filterPosts().map(post => 
-                <Post {...post}/>)}
+                <Post {...{post}} key={post._id}/>)}
             </div>
             { formActive && 
                 <PostForm 
                     exitForm={() => setFormActive(false)} 
                     action={newPost} 
-                    {...headers}/>
+                    {...{headers}}/>
             }
             { message &&
                 <div className='message'>{message}</div>

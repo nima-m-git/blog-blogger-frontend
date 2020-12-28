@@ -1,5 +1,6 @@
-import { useCycle } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+import Button from './Button';
 
 const buttons = [
     {
@@ -25,48 +26,29 @@ const buttons = [
     }
 ];
 
-const buttonColors = ['blue', 'green'];
 
-
-const Button = ({ button, filters, setSettings, resetSettings, }) => {
-    const [color, cycleColor] = useCycle(buttonColors);
-    const [buttonState, setButtonState] = useCycle(button.states);
-
-    return (
-        <button 
-            onClick={() => {
-                cycleColor();
-                setButtonState();
-                if (buttonState === 'view all') {
-                    resetSettings();
-                } else {
-                    setSettings({...filters, [button.filter]: !filters[button.filter]});
-                }
-            }}
-            style={{ backgroundColor: color }}
-        >{buttonState}</button>
-    )
-}
-
-
-const FilterBar = ({ setFilter, posts, }) => {
-    const initialFilters = {
+const FilterBar = ({ setFilters, filters, }) => {
+    const initialFilters = useMemo(() => ({
         viewAll: true,
         usersPosts: null,
         published: null,
-    };
+    }), []);
+    
     const [settings, setSettings] = useState(initialFilters);
 
-    const resetSettings = () => setSettings(initialFilters);
+    const resetSettings = useCallback(
+        () => setSettings(initialFilters)
+        ,[initialFilters]
+    )
 
     useEffect(() => {
-        setFilter(settings);
-    }, [settings, setFilter])
+        setFilters(settings);
+    }, [settings, setFilters])
 
     return (
         <div className='filter-bar'>
-            {buttons.map(button => (
-                <Button {...button} {...resetSettings}/>
+            {buttons.map((button, i) => (
+                <Button {...{button}} {...{resetSettings}} {...{setSettings}} {...{filters}} key={i}/>
             ))}
         </div>
     )
