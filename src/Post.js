@@ -1,21 +1,11 @@
 import { useState } from 'react';
 import PostForm from './PostForm';
 
-const Post = ({ post, post: { title, id, content, author, comment, timeCreated, published, }, headers, }) => {
+const Post = ({ post, post: { title, id, content, author, comment, timeCreated, published, }, headers, updatePost, }) => {
     const [formActive, setFormActive] = useState(false);
-    const [message, setMessage] = useState(null);
+    // const [message, setMessage] = useState(null);
 
-    const updatePost = (updates) => {
-        const newPost = { ...post, ...updates };
-        fetch(`/posts/${id}`, {
-            method: 'PUT',
-            body: newPost,
-            headers,
-        })
-        .then(res => res.json())
-        .then(result => setMessage(result.message),
-        (error) => setMessage(error.message))
-    }
+    const update = (update) => updatePost(post, update);
 
     return (
         <div>
@@ -40,11 +30,11 @@ const Post = ({ post, post: { title, id, content, author, comment, timeCreated, 
                 </div>
             </div>
             { formActive && 
-                <PostForm post={post} exitForm={setFormActive.bind(false)} action={updatePost}/>
+                <PostForm post={post} exitForm={setFormActive.bind(false)} action={update}/>
             }
-            { message && 
+            {/* { message && 
                 <div className='message'>{message}</div>
-            }
+            } */}
         </div>
 
 

@@ -16,6 +16,7 @@ const Menu = ({ token, username, }) => {
 
     const headers = {
         'Authorization': `Bearer ${token}`,
+        'content-type': 'application/json',
     }
 
     const filterPosts = () => {
@@ -43,17 +44,29 @@ const Menu = ({ token, username, }) => {
     const newPost = (post) => {
         fetch(`${process.env.REACT_APP_BE_URL}/posts/`, {
             method: 'POST',
-            body: post,
+            body: JSON.stringify(post),
             headers,
         })
         .then(res => res.json())
         .then(result => setMessage(result.message),
         (error) => setMessage(error.message))
     }
-  
-    
-    useEffect(() => {
-      fetch(`${process.env.REACT_APP_BE_URL}/posts`)
+
+    const updatePost = (post, updates) => {
+        const newPost = JSON.stringify({ ...post, ...updates });
+        fetch(`${process.env.REACT_APP_BE_URL}/posts/${post._id}`, {
+            method: 'PUT',
+            body: newPost,
+            headers,
+        })
+        .then(res => res.json())
+        .then(result => setMessage(result.message),
+        (error) => setMessage(error.message))
+        .then(() => getPosts())
+    }
+
+    const getPosts = () => {
+        fetch(`${process.env.REACT_APP_BE_URL}/posts`)
         .then(res => res.json())
         .then((result) => {
           setPosts(result.posts)
@@ -63,6 +76,12 @@ const Menu = ({ token, username, }) => {
             setIsLoaded(true);
           }
         )
+
+        console.log('getting posts')
+    }
+    
+    useEffect(() => {
+        getPosts();
     }, [])
 
 
@@ -72,12 +91,12 @@ const Menu = ({ token, username, }) => {
         return <div>Loading...</div>
       } else {
         return (
-          <div>
+          <div className='container'>
             <button onClick={() => setFormActive(true)}>New Post</button>
             <FilterBar {...{setFilters}} {...{filters}}/>
             <div className='posts-container'>
               {filterPosts().map(post => 
-                <Post {...{post}} key={post._id}/>)}
+                <Post {...{post}} {...{headers}} {...{updatePost}} {...{getPosts}} key={post._id}/>)}
             </div>
             { formActive && 
                 <PostForm 
