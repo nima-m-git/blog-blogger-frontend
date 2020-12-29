@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Post, PostForm, FilterBar } from '../index';
+import './Menu.scss';
 
 const Menu = ({ token, username }) => {
   const [filters, setFilters] = useState(null);
@@ -127,8 +128,11 @@ const Menu = ({ token, username }) => {
         )}
         {message?.length > 0 && <div className="message">{message}</div>}
 
-        <button onClick={() => setFormActive(true)}>New Post</button>
-        <FilterBar {...{ setFilters }} {...{ filters }} />
+        <div className="head-bar">
+          <button onClick={() => setFormActive(true)}>New Post</button>
+          <FilterBar {...{ setFilters }} {...{ filters }} />
+        </div>
+
         <div className="posts-container">
           {filterPosts().map((post) => (
             <Post
@@ -141,6 +145,7 @@ const Menu = ({ token, username }) => {
             />
           ))}
         </div>
+
         {formActive && (
           <PostForm
             exitForm={() => setFormActive(false)}
@@ -148,7 +153,6 @@ const Menu = ({ token, username }) => {
             {...{ headers }}
           />
         )}
-        {message && <div className="message">{message}</div>}
       </div>
     );
   }

@@ -1,0 +1,96 @@
+.post-form {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 30%;
+  margin: 0 auto;
+  padding: 1em 1em 0.2em;
+  width: 360px;
+  background: rgb(242, 245, 240);
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+
+  label:not(.published) {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+  }
+
+  input,
+  textarea {
+    padding: 7px;
+    border-radius: 5px;
+    border: 0.5px solid rgba(128, 128, 128, 0.3);
+    background: rgb(247, 247, 247);
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    resize: vertical;
+  }
+
+  & > * {
+    margin: 0.4em 0;
+  }
+}
+
+.exit-btn {
+  align-self: flex-start;
+  font-size: 18px;
+  font-weight: 700;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.update-post-footer {
+  font-size: 0.7em;
+}
+
+.buttons-footer {
+  align-self: center;
+
+  button {
+    padding: 0.5em;
+    margin: 0 10px;
+    font-size: 16px;
+    border-radius: 7px;
+    border: none;
+    width: 70px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s background;
+    color: white;
+  }
+
+  .save {
+    background-color: rgb(48, 204, 0);
+
+    &:hover {
+      background-color: rgb(42, 182, 0);
+    }
+  }
+
+  .delete {
+    background-color: rgb(236, 0, 0);
+
+    &:hover {
+      background-color: rgb(210, 0, 0);
+    }
+  }
+}
+
+.secondary-bar {
+  display: flex;
+  justify-content: space-between;
+}
