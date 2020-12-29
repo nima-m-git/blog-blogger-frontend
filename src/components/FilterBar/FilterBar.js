@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import Button from './Button';
+import { Button } from '../index';
 
 const buttons = [
   {

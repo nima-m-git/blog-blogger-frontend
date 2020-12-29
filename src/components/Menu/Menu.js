@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import FilterBar from './FilterBar';
-import Post from './Post';
-import PostForm from './PostForm';
+import { Post, PostForm, FilterBar } from '../index';
 
 const Menu = ({ token, username }) => {
   const [filters, setFilters] = useState(null);
@@ -11,8 +9,6 @@ const Menu = ({ token, username }) => {
   const [errors, setErrors] = useState([]);
   const [message, setMessage] = useState(null);
   const [formActive, setFormActive] = useState(false);
-
-  // console.log(filters)
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -55,7 +51,6 @@ const Menu = ({ token, username }) => {
           setErrors(errors.map((err) => err.msg));
           console.log({ errors });
         }
-
         getPosts();
       });
   };
@@ -76,7 +71,6 @@ const Menu = ({ token, username }) => {
           setErrors(errors.map((err) => err.msg));
           console.log({ errors });
         }
-
         getPosts();
       });
   };
@@ -95,7 +89,6 @@ const Menu = ({ token, username }) => {
           setErrors(errors.map((err) => err.msg));
           console.log({ errors });
         }
-
         getPosts();
       });
   };

@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import PostForm from './PostForm';
+import { PostForm } from '../index';
 
 const Post = ({
   post,
-  post: { title, id, content, author, comment, timeCreated, published },
-  headers,
+  post: { title, content, author, comment, timeCreated, published },
   updatePost,
   deletePost,
 }) => {
@@ -16,7 +15,7 @@ const Post = ({
       <div className="post-tile" onClick={() => setFormActive(true)}>
         <h2 className="title">{title}</h2>
         <p className="content-short">{content[50]}</p>
-        <h3 className="author">By {author}</h3>
+        <h3 className="author">By {author.username}</h3>
         <div className="comments">Comments ({comment?.length || 0})</div>
         <div className="created">Created: {timeCreated}</div>
         <div className="published">
