@@ -1,10 +1,19 @@
-import { useCycle } from 'framer-motion';
-import { useEffect } from 'react';
+import { motion, useCycle } from 'framer-motion';
+import { useEffect, useState } from 'react';
+
+import './Button.scss';
 
 const Button = ({ button, filters, setFilters, resetFilters }) => {
-  const buttonColors = ['blue', 'green'];
-  const [color, cycleColor] = useCycle(...buttonColors);
   const [buttonState, cycleButtonState] = useCycle(...button.states);
+  const [isOn, setIsOn] = useState(false);
+
+  const handleClick = () => {
+    setIsOn(!isOn);
+    cycleButtonState();
+    setFilters((prev) => {
+      return { ...prev, [button.filter]: !filters[button.filter] };
+    });
+  };
 
   useEffect(() => {
     if (buttonState === 'view all') {
@@ -13,18 +22,16 @@ const Button = ({ button, filters, setFilters, resetFilters }) => {
   }, [buttonState, resetFilters]);
 
   return (
-    <button
-      onClick={() => {
-        cycleColor();
-        cycleButtonState();
-        setFilters((prev) => {
-          return { ...prev, [button.filter]: !filters[button.filter] };
-        });
-      }}
-      style={{ backgroundColor: color, color: 'white' }}
+    <motion.div
+      layout
+      className={`switch ${isOn ? 'on' : 'off'}`}
+      onClick={handleClick}
     >
-      {buttonState}
-    </button>
+      <motion.button layout></motion.button>
+      <motion.div layout className="toggle-text">
+        <div>{buttonState}</div>
+      </motion.div>
+    </motion.div>
   );
 };
 

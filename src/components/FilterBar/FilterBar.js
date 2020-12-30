@@ -1,22 +1,23 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Button } from '../index';
+import './FilterBar.scss';
 
 const buttons = [
   {
-    states: ['view all', 'hide'],
+    states: ['View All', 'Hide'],
     filter: 'viewAll',
   },
   {
-    states: ['your posts', 'others posts'],
+    states: ['Yours', 'Others'],
     filter: 'usersPosts',
   },
   {
-    states: ['published', 'unpublished'],
+    states: ['Published', 'Unpublished'],
     filter: 'published',
   },
   {
-    states: ['date added ^', 'date added v'],
+    states: ['Newest', 'Oldest'],
     filter: 'dateAdded',
   },
 ];
@@ -65,6 +66,7 @@ const FilterBar = ({ posts, setFilteredPosts, username }) => {
         );
       }
     }
+
     setFilteredPosts(filtered);
   }, [setFilters, posts, username, filters, setFilteredPosts]);
 
