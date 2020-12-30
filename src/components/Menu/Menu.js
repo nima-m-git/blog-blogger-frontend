@@ -109,7 +109,9 @@ const Menu = ({ token, username }) => {
         {message?.length > 0 && <div className="message">{message}</div>}
 
         <div className="head-bar">
-          <button onClick={() => setFormActive(true)}>New Post</button>
+          <button className="new-btn" onClick={() => setFormActive(true)}>
+            New Post
+          </button>
           <FilterBar
             {...{ setFilteredPosts }}
             {...{ posts }}
