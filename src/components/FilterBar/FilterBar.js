@@ -15,9 +15,13 @@ const buttons = [
     states: ['published', 'unpublished'],
     filter: 'published',
   },
+  {
+    states: ['date added ^', 'date added v'],
+    filter: 'dateAdded',
+  },
 ];
 
-const FilterBar = ({ setFilters, filters }) => {
+const FilterBar = ({ posts, setFilteredPosts, username }) => {
   const initialFilters = useMemo(
     () => ({
       viewAll: true,
@@ -27,23 +31,50 @@ const FilterBar = ({ setFilters, filters }) => {
     []
   );
 
-  const [settings, setSettings] = useState(initialFilters);
+  const [filters, setFilters] = useState(initialFilters);
 
-  const resetSettings = useCallback(() => setSettings(initialFilters), [
+  const resetFilters = useCallback(() => setFilters(initialFilters), [
     initialFilters,
   ]);
 
   useEffect(() => {
-    setFilters(settings);
-  }, [settings, setFilters]);
+    let filtered = [...posts];
+
+    if (!filters || filters.viewAll === false) {
+      filtered = [];
+    } else {
+      if (filters.usersPosts === true) {
+        filtered = filtered.filter((post) => post.author === username);
+      } else if (filters.userPosts === false) {
+        filtered = filtered.filter((post) => post.author !== username);
+      }
+
+      if (filters.published === true) {
+        filtered = filtered.filter((post) => post.published);
+      } else if (filters.published === false) {
+        filtered = filtered.filter((post) => !post.published);
+      }
+
+      if (filters.dateAdded === true) {
+        filtered = filtered.sort((a, b) =>
+          a.timeCreated > b.timeCreated ? 1 : -1
+        );
+      } else if (filters.dateAdded === false) {
+        filtered = filtered.sort((a, b) =>
+          a.timeCreated < b.timeCreated ? 1 : -1
+        );
+      }
+    }
+    setFilteredPosts(filtered);
+  }, [setFilters, posts, username, filters, setFilteredPosts]);
 
   return (
     <div className="filter-bar">
       {buttons.map((button, i) => (
         <Button
           {...{ button }}
-          {...{ resetSettings }}
-          {...{ setSettings }}
+          {...{ resetFilters }}
+          {...{ setFilters }}
           {...{ filters }}
           key={i}
         />

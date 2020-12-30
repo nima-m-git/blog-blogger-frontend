@@ -1,23 +1,23 @@
 import { useCycle } from 'framer-motion';
 import { useEffect } from 'react';
 
-const Button = ({ button, filters, setSettings, resetSettings }) => {
+const Button = ({ button, filters, setFilters, resetFilters }) => {
   const buttonColors = ['blue', 'green'];
   const [color, cycleColor] = useCycle(...buttonColors);
   const [buttonState, cycleButtonState] = useCycle(...button.states);
 
   useEffect(() => {
     if (buttonState === 'view all') {
-      resetSettings();
+      resetFilters();
     }
-  }, [buttonState, resetSettings]);
+  }, [buttonState, resetFilters]);
 
   return (
     <button
       onClick={() => {
         cycleColor();
         cycleButtonState();
-        setSettings((prev) => {
+        setFilters((prev) => {
           return { ...prev, [button.filter]: !filters[button.filter] };
         });
       }}

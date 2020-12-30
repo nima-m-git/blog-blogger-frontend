@@ -4,8 +4,9 @@ import { Post, PostForm, FilterBar } from '../index';
 import './Menu.scss';
 
 const Menu = ({ token, username }) => {
-  const [filters, setFilters] = useState(null);
+  // const [filters, setFilters] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState(posts);
   const [isLoaded, setIsLoaded] = useState(false);
   const [errors, setErrors] = useState([]);
   const [message, setMessage] = useState(null);
@@ -14,27 +15,6 @@ const Menu = ({ token, username }) => {
   const headers = {
     Authorization: `Bearer ${token}`,
     'content-type': 'application/json',
-  };
-
-  const filterPosts = () => {
-    let filtered = [...posts];
-
-    if (!filters || filters.viewAll === false) {
-      filtered = [];
-    } else {
-      if (filters.usersPosts === true) {
-        filtered = filtered.filter((post) => post.author === username);
-      } else if (filters.userPosts === false) {
-        filtered = filtered.filter((post) => post.author !== username);
-      }
-
-      if (filters.published === true) {
-        filtered = filtered.filter((post) => post.published);
-      } else if (filters.published === false) {
-        filtered = filtered.filter((post) => !post.published);
-      }
-    }
-    return filtered;
   };
 
   const newPost = (post) => {
@@ -130,11 +110,15 @@ const Menu = ({ token, username }) => {
 
         <div className="head-bar">
           <button onClick={() => setFormActive(true)}>New Post</button>
-          <FilterBar {...{ setFilters }} {...{ filters }} />
+          <FilterBar
+            {...{ setFilteredPosts }}
+            {...{ posts }}
+            {...{ username }}
+          />
         </div>
 
         <div className="posts-container">
-          {filterPosts().map((post) => (
+          {filteredPosts.map((post) => (
             <Post
               {...{ post }}
               {...{ headers }}
