@@ -42,7 +42,7 @@ const PostForm = ({ post = null, exitForm, action, deletePost }) => {
           type="checkbox"
           name="published"
           checked={data.published}
-          onChange={() => setData({ ...data, published: !data.published })}
+          onChange={(e) => setData({ ...data, published: e.target.checked })}
         />
       </label>
 

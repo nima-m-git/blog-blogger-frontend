@@ -16,11 +16,18 @@ const Post = ({
       <h2 className="title" onClick={() => setFormActive(true)}>
         {title}
       </h2>
-      <p className="content-short">{content.slice(0, 50)}...</p>
       <h3 className="author">By {author.username}</h3>
-      <div className="comments">Comments ({comment?.length || 0})</div>
-      <div className="created">Created: {timeCreated}</div>
-      <div className="published">{published ? 'Published' : 'Unpublished'}</div>
+      <p className="content-short">{content.slice(0, 50)}...</p>
+      <div className="secondary-bar">
+        <div className="published">
+          {published ? 'Published' : 'Unpublished'}
+        </div>
+        <div className="comments">Comments ({comment?.length || 0})</div>
+      </div>
+      <div className="dates secondary-bar">
+        <div>Added: {post.timeCreated?.slice(0, 10)}</div>
+        <div>Last Edited: {post.timeLastEdited?.slice(0, 10)}</div>
+      </div>
 
       {formActive && (
         <PostForm

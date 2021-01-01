@@ -4,7 +4,6 @@ import { Post, PostForm, FilterBar } from '../index';
 import './Menu.scss';
 
 const Menu = ({ token, username }) => {
-  // const [filters, setFilters] = useState(null);
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -17,6 +16,18 @@ const Menu = ({ token, username }) => {
     'content-type': 'application/json',
   };
 
+  const handleResult = (result) => {
+    setMessage(result?.message);
+    setErrors(
+      result?.errors
+        ? result.errors.map((err) => err.msg)
+        : result?.err
+        ? [result.err]
+        : []
+    );
+    getPosts();
+  };
+
   const newPost = (post) => {
     fetch(`${process.env.REACT_APP_BE_URL}/posts/`, {
       method: 'POST',
@@ -24,16 +35,7 @@ const Menu = ({ token, username }) => {
       headers,
     })
       .then((res) => res.json())
-      .then((result) => {
-        setMessage(result?.message);
-
-        const errors = result?.errors;
-        if (errors !== undefined) {
-          setErrors(errors.map((err) => err.msg));
-          console.log({ errors });
-        }
-        getPosts();
-      });
+      .then((result) => handleResult(result));
   };
 
   const updatePost = (post, updates) => {
@@ -44,16 +46,7 @@ const Menu = ({ token, username }) => {
       headers,
     })
       .then((res) => res.json())
-      .then((result) => {
-        setMessage(result?.message);
-
-        const errors = result?.errors;
-        if (errors !== undefined) {
-          setErrors(errors.map((err) => err.msg));
-          console.log({ errors });
-        }
-        getPosts();
-      });
+      .then((result) => handleResult(result));
   };
 
   const deletePost = (post) => {
@@ -62,16 +55,7 @@ const Menu = ({ token, username }) => {
       headers,
     })
       .then((res) => res.json())
-      .then((result) => {
-        setMessage(result?.message);
-
-        const errors = result?.errors;
-        if (errors !== undefined) {
-          setErrors(errors.map((err) => err.msg));
-          console.log({ errors });
-        }
-        getPosts();
-      });
+      .then((result) => handleResult(result));
   };
 
   const getPosts = () => {
@@ -83,6 +67,7 @@ const Menu = ({ token, username }) => {
           setIsLoaded(true);
         },
         (error) => {
+          console.log(error);
           setErrors([error]);
           setIsLoaded(true);
         }
