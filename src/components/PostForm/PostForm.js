@@ -9,13 +9,14 @@ const PostForm = ({ post = null, exitForm, action, deletePost }) => {
   });
 
   const handleSubmit = async () => {
+    console.log('submitting');
     await action(data);
     exitForm();
   };
 
   return (
     <form className="post-form" onSubmit={handleSubmit}>
-      <button className="exit-btn" onClick={exitForm}>
+      <button type="button" className="exit-btn" onClick={() => exitForm()}>
         x
       </button>
       <label>
@@ -51,7 +52,11 @@ const PostForm = ({ post = null, exitForm, action, deletePost }) => {
           Save
         </button>
         {post?._id && (
-          <button className="delete" onClick={() => deletePost(post)}>
+          <button
+            type="button"
+            className="delete"
+            onClick={() => deletePost(post)}
+          >
             Delete
           </button>
         )}

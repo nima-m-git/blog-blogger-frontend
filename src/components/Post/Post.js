@@ -4,7 +4,7 @@ import './Post.scss';
 
 const Post = ({
   post,
-  post: { title, content, author, comment, timeCreated, published },
+  post: { title, content, author, comment, published },
   updatePost,
   deletePost,
 }) => {

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './Login.scss';
 
 const Login = ({ setToken, setUsername }) => {
   const [email, setEmail] = useState('');
@@ -27,8 +28,9 @@ const Login = ({ setToken, setUsername }) => {
   };
 
   return (
-    <form onSubmit={checkCredentials}>
-      <h2>Login</h2>
+    <form className="login-form" onSubmit={checkCredentials}>
+      <h2 className="form-title">Login</h2>
+      {error && <div className="error">- {error}</div>}
       <label>
         Email:
         <input
@@ -48,7 +50,6 @@ const Login = ({ setToken, setUsername }) => {
         />
       </label>
       <button type="submit">Submit</button>
-      {error && <div className="error-msg">{error}</div>}
     </form>
   );
 };
