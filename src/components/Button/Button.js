@@ -16,8 +16,9 @@ const Button = ({ button, filters, setFilters, resetFilters }) => {
   };
 
   useEffect(() => {
-    if (buttonState === 'view all') {
+    if (buttonState === 'View All') {
       resetFilters();
+      console.log('resetting');
     }
   }, [buttonState, resetFilters]);
 
@@ -27,9 +28,13 @@ const Button = ({ button, filters, setFilters, resetFilters }) => {
       className={`switch ${isOn ? 'on' : 'off'}`}
       onClick={handleClick}
     >
-      <motion.button layout></motion.button>
-      <motion.div layout className="toggle-text">
-        <div>{buttonState}</div>
+      <motion.button layout transition={{ ease: 'easeOut' }}></motion.button>
+      <motion.div
+        layout
+        transition={{ ease: 'easeOut' }}
+        className="toggle-text"
+      >
+        {buttonState}
       </motion.div>
     </motion.div>
   );
