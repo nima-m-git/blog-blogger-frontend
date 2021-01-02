@@ -83,15 +83,27 @@ const Menu = ({ token, username }) => {
   } else {
     return (
       <div className="container">
-        {errors?.length > 0 && (
-          <div className="errors">
-            Errors:{' '}
-            {errors.map((error, i) => (
-              <div key={i}>{error}</div>
-            ))}
-          </div>
-        )}
-        {message?.length > 0 && <div className="message">{message}</div>}
+        <div className="message-container">
+          {errors?.length > 0 && (
+            <div className="errors">
+              <h4 className="err-title">Errors: </h4>
+              {errors.map((error, i) => (
+                <div key={i}>- {error}</div>
+              ))}
+              <div className="ok-btn">
+                <button onClick={() => setErrors([])}>OK</button>
+              </div>
+            </div>
+          )}
+          {message?.length > 0 && (
+            <div className="message">
+              {message}
+              <div className="ok-btn">
+                <button onClick={() => setMessage(null)}>OK</button>
+              </div>
+            </div>
+          )}
+        </div>
 
         <div className="head-bar">
           <button className="new-btn" onClick={() => setFormActive(true)}>

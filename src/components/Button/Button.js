@@ -18,7 +18,6 @@ const Button = ({ button, filters, setFilters, resetFilters }) => {
   useEffect(() => {
     if (buttonState === 'View All') {
       resetFilters();
-      console.log('resetting');
     }
   }, [buttonState, resetFilters]);
 
