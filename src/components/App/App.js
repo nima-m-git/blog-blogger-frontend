@@ -12,13 +12,15 @@ const App = () => {
   const [username, setUsername] = useState('');
 
   return (
-    <div className="app">
+    <div>
       <h1>Blogger Home</h1>
-      {token ? (
-        <Menu {...{ token }} {...{ username }} />
-      ) : (
-        <Login {...{ setToken }} {...{ setUsername }} />
-      )}
+      <div className="app">
+        {token ? (
+          <Menu {...{ token }} {...{ username }} />
+        ) : (
+          <Login {...{ setToken }} {...{ setUsername }} />
+        )}
+      </div>
     </div>
   );
 };
