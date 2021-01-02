@@ -9,7 +9,6 @@ const PostForm = ({ post = null, exitForm, action, deletePost }) => {
   });
 
   const handleSubmit = async () => {
-    console.log('submitting');
     await action(data);
     exitForm();
   };

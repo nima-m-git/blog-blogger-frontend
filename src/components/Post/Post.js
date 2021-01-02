@@ -22,7 +22,13 @@ const Post = ({
         <div className="published">
           {published ? 'Published' : 'Unpublished'}
         </div>
-        <div className="comments">Comments ({comment?.length || 0})</div>
+        <a
+          href={`${process.env.REACT_APP_BE_URL}/posts/${post._id}`}
+          target="blank"
+          className="comments"
+        >
+          Comments ({comment?.length || 0})
+        </a>
       </div>
       <div className="dates secondary-bar">
         <div>Added: {post.timeCreated?.slice(0, 10)}</div>
