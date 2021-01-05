@@ -8,7 +8,8 @@ const Login = ({ setToken, setUsername }) => {
 
   const checkCredentials = (e) => {
     e.preventDefault();
-    console.log('checking');
+    console.log(`checking post to ${process.env.REACT_APP_BE_URL}`);
+
     fetch(process.env.REACT_APP_BE_URL + '/users/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
