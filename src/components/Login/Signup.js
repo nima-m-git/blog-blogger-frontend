@@ -95,6 +95,7 @@ const Signup = () => {
           name="adminCode"
           value={inputs.adminCode}
           onChange={handleChange}
+          required
         />
       </label>
       <button type="submit">Submit</button>
