@@ -58,6 +58,15 @@ const Menu = ({ token, username }) => {
       .then((result) => handleResult(result));
   };
 
+  const deleteComment = (id, post) => {
+    fetch(`${process.env.REACT_APP_BE_URL}/posts/${post._id}/${id}`, {
+      method: 'DELETE',
+      headers,
+    })
+      .then((res) => res.json())
+      .then((result) => handleResult(result));
+  };
+
   const getPosts = () => {
     fetch(`${process.env.REACT_APP_BE_URL}/posts`)
       .then((res) => res.json())
@@ -71,7 +80,6 @@ const Menu = ({ token, username }) => {
           setIsLoaded(true);
         },
         (error) => {
-          console.log(error);
           setErrors([error]);
           setIsLoaded(true);
         }
@@ -128,6 +136,7 @@ const Menu = ({ token, username }) => {
               {...{ updatePost }}
               {...{ getPosts }}
               {...{ deletePost }}
+              {...{ deleteComment }}
               key={post._id}
             />
           ))}

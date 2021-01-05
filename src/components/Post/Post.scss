@@ -5,6 +5,9 @@
   padding: 20px;
   background: whitesmoke;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .secondary-bar {
     font-size: 0.9em;
@@ -53,4 +56,44 @@
   &:hover {
     text-decoration: underline;
   }
+}
+
+.comment-box {
+  position: fixed;
+  left: 1em;
+  right: 1em;
+  top: 30%;
+  margin: 0 auto;
+  padding: 1em 1em 0.2em;
+  width: 380px;
+  height: 500px;
+  overflow-y: scroll;
+  background: rgb(242, 243, 241);
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 200vmax 200vmax rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  z-index: 3;
+}
+
+.comment {
+  position: relative;
+  display: flex;
+  border-radius: 15px;
+  box-shadow: 0 0 10px 1px rgba(165, 126, 42, 0.1);
+  background: rgba(233, 206, 156, 0.103);
+  margin: 1.3em 0.8em;
+  padding: 0.5em 1.2em;
+  min-width: 300px;
+  max-width: 50%;
+  min-height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.delete-btn {
+  margin-left: auto;
+  width: fit-content;
+  color: rgb(204, 0, 0);
+  font-weight: 600;
 }

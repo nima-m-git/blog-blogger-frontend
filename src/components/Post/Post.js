@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { PostForm } from '../index';
+import CommentBox from './CommentBox';
 import './Post.scss';
 
 const Post = ({
   post,
-  post: { title, content, author, comment, published },
+  post: { title, content, author, comments, published },
   updatePost,
   deletePost,
+  deleteComment,
 }) => {
   const [formActive, setFormActive] = useState(false);
+  const [commentBox, setCommentBox] = useState(false);
   const update = (updatedPost) => updatePost(post, updatedPost);
 
   return (
@@ -22,18 +25,22 @@ const Post = ({
         <div className="published">
           {published ? 'Published' : 'Unpublished'}
         </div>
-        <a
-          href={`${process.env.REACT_APP_BE_URL}/posts/${post._id}`}
-          target="blank"
-          className="comments"
-        >
-          Comments ({comment?.length || 0})
-        </a>
+        <div className="comments" onClick={() => setCommentBox(true)}>
+          Comments ({comments?.length || 0})
+        </div>
       </div>
       <div className="dates secondary-bar">
         <div>Added: {post.timeCreated?.slice(0, 10)}</div>
         <div>Last Edited: {post.timeLastEdited?.slice(0, 10)}</div>
       </div>
+
+      {commentBox && (
+        <CommentBox
+          {...{ comments }}
+          exit={setCommentBox.bind(false)}
+          {...{ deleteComment }}
+        />
+      )}
 
       {formActive && (
         <PostForm
