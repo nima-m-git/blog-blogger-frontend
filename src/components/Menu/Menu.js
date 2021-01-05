@@ -63,7 +63,11 @@ const Menu = ({ token, username }) => {
       .then((res) => res.json())
       .then(
         (result) => {
-          setPosts(result.posts);
+          setPosts(
+            result.posts.sort((a, b) =>
+              a.timeCreated > b.timeCreated ? -1 : 1
+            )
+          );
           setIsLoaded(true);
         },
         (error) => {

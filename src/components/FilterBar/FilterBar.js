@@ -13,7 +13,7 @@ const buttons = [
     filter: 'usersPosts',
   },
   {
-    states: ['Published', 'Unpublished'],
+    states: ['Unublished', 'Published'],
     filter: 'published',
   },
   {
