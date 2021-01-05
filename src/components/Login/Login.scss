@@ -1,9 +1,9 @@
-.login-form {
+.login-form,
+.signup-form {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   width: 300px;
-  height: 260px;
   border: none;
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
   padding: 1.5em;
@@ -34,6 +34,7 @@
     display: flex;
     flex-direction: column;
     font-size: 18px;
+    margin: 0.5em 0;
   }
 
   input {
@@ -55,4 +56,31 @@
   color: red;
   font-style: italic;
   margin: 5px 0;
+}
+
+.login-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 200px;
+  width: fit-content;
+  margin: 0 auto;
+
+  .login-links {
+    display: flex;
+  }
+
+  .link {
+    margin: 1em;
+    padding: 1em;
+    border-radius: 10px;
+    border: 0.5px solid rgba(128, 128, 128, 0.2);
+    background: rgb(246, 247, 240);
+    box-shadow: 0 0 10px 1px rgba(168, 167, 163, 0.2);
+    transition: all 0.3s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
 }

@@ -1,14 +1,16 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import './Login.scss';
 
-const Login = ({ setToken, setUsername }) => {
+const Login = ({ setToken, setUsername, setIsAdmin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
+  const history = useHistory();
+
   const checkCredentials = (e) => {
     e.preventDefault();
-    console.log(`checking post to ${process.env.REACT_APP_BE_URL}`);
 
     fetch(process.env.REACT_APP_BE_URL + '/users/login', {
       method: 'POST',
@@ -20,11 +22,16 @@ const Login = ({ setToken, setUsername }) => {
       .then((res) => res.json())
       .then((result) => {
         if (result.token) {
-          setToken(result.token);
-          setUsername(result.username);
+          if (result.admin) {
+            setToken(result.token);
+            setUsername(result.username);
+            history.push('/');
+          } else {
+            setError('Admin privileges required.');
+          }
         }
         if (result.message) {
-          setError(result.message.message);
+          setError(result.message);
         }
       });
   };
