@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 
-// import "./LoginBar.scss";
-
 const LoginBar = () => (
   <nav className="login-bar">
     <div className="login-links">

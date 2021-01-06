@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Login.scss';
 
-const Login = ({ setToken, setUsername, setIsAdmin }) => {
+const Login = ({ setToken, setUsername }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Post, PostForm, FilterBar } from '../index';
+import { Post, PostForm, FilterBar } from 'components/index';
 import './Menu.scss';
 
 const Menu = ({ token, username }) => {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PostForm } from '../index';
+import { PostForm } from 'components/index';
 import CommentBox from './CommentBox';
 import './Post.scss';
 

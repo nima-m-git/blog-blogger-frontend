@@ -31,7 +31,6 @@ const FilterBar = ({ posts, setFilteredPosts, username }) => {
     }),
     []
   );
-
   const [filters, setFilters] = useState(initialFilters);
 
   const resetFilters = useCallback(() => setFilters(initialFilters), [
