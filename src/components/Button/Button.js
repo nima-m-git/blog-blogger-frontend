@@ -10,9 +10,10 @@ const Button = ({ button, filters, setFilters, resetFilters }) => {
   const handleClick = () => {
     setIsOn(!isOn);
     cycleButtonState();
-    setFilters((prev) => {
-      return { ...prev, [button.filter]: !filters[button.filter] };
-    });
+    setFilters((prev) => ({
+      ...prev,
+      [button.filter]: !filters[button.filter],
+    }));
   };
 
   useEffect(() => {

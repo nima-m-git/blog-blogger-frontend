@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
-const LoginBar = () => (
-  <nav className="login-bar">
+const LoginPage = () => (
+  <nav className="login-page">
     <div className="login-links">
       <Link to="/login">
         <div className="link">Login</div>
@@ -13,4 +13,4 @@ const LoginBar = () => (
   </nav>
 );
 
-export default LoginBar;
+export default LoginPage;

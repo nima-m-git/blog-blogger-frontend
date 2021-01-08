@@ -1,9 +1,10 @@
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import { useState } from 'react';
 import './App.scss';
 
-import { Menu, Login, Signup, LoginBar } from 'components/index';
+import { Menu, Login, Signup, LoginPage } from 'components/index';
+import LoginBar from './LoginBar';
 
 const App = () => {
   const [token, setToken] = useState(null);
@@ -11,26 +12,26 @@ const App = () => {
 
   return (
     <div className="app">
-      <Link to="/">
-        <header>
-          <h1>Blogger Home</h1>
-        </header>
-      </Link>
-      <Switch>
-        <Route path="/" exact>
-          {token ? (
-            <Menu {...{ token }} {...{ username }} />
-          ) : (
-            <LoginBar {...{ setToken }} />
-          )}
-        </Route>
-        <Route path="/login">
-          <Login {...{ setToken }} {...{ setUsername }} />
-        </Route>
-        <Route path="/signup">
-          <Signup />
-        </Route>
-      </Switch>
+      <LoginBar {...{ token }} {...{ setToken }} />
+
+      <div className="container">
+        {/* Routes */}
+        <Switch>
+          <Route path="/" exact>
+            {token ? (
+              <Menu {...{ token }} {...{ username }} />
+            ) : (
+              <LoginPage {...{ setToken }} />
+            )}
+          </Route>
+          <Route path="/login">
+            <Login {...{ setToken }} {...{ setUsername }} />
+          </Route>
+          <Route path="/signup">
+            <Signup />
+          </Route>
+        </Switch>
+      </div>
     </div>
   );
 };

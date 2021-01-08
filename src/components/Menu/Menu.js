@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Post, PostForm, FilterBar } from 'components/index';
+import { Post, PostForm, FilterBar, LoaderSpinner } from 'components/index';
 import './Menu.scss';
 
 const Menu = ({ token, username }) => {
@@ -18,6 +18,7 @@ const Menu = ({ token, username }) => {
 
   const handleResult = (result) => {
     setMessage(result?.message);
+    // Set error(s) in array
     setErrors(
       result?.errors
         ? result.errors.map((err) => err.msg)
@@ -90,68 +91,70 @@ const Menu = ({ token, username }) => {
     getPosts();
   }, []);
 
-  if (!isLoaded) {
-    return <div className="loading">Loading...</div>;
-  } else {
-    return (
-      <div className="container">
-        <div className="message-container">
-          {errors?.length > 0 && (
-            <div className="errors">
-              <h4 className="err-title">Errors: </h4>
-              {errors.map((error, i) => (
-                <div key={i}>- {error}</div>
-              ))}
-              <div className="ok-btn">
-                <button onClick={() => setErrors([])}>OK</button>
+  return (
+    <div>
+      {isLoaded ? (
+        <div className="container">
+          <div className="message-container">
+            {errors?.length > 0 && (
+              <div className="errors">
+                <h4 className="err-title">Errors: </h4>
+                {errors.map((error, i) => (
+                  <div key={i}>- {error}</div>
+                ))}
+                <div className="ok-btn">
+                  <button onClick={() => setErrors([])}>OK</button>
+                </div>
               </div>
-            </div>
-          )}
-          {message?.length > 0 && (
-            <div className="message">
-              {message}
-              <div className="ok-btn">
-                <button onClick={() => setMessage(null)}>OK</button>
+            )}
+            {message?.length > 0 && (
+              <div className="message">
+                {message}
+                <div className="ok-btn">
+                  <button onClick={() => setMessage(null)}>OK</button>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
-        <div className="head-bar">
-          <button className="new-btn" onClick={() => setFormActive(true)}>
-            New Post
-          </button>
-          <FilterBar
-            {...{ setFilteredPosts }}
-            {...{ posts }}
-            {...{ username }}
-          />
-        </div>
-
-        <div className="posts-container">
-          {filteredPosts.map((post) => (
-            <Post
-              {...{ post }}
-              {...{ headers }}
-              {...{ updatePost }}
-              {...{ getPosts }}
-              {...{ deletePost }}
-              {...{ deleteComment }}
-              key={post._id}
+          <div className="head-bar">
+            <button className="new-btn" onClick={() => setFormActive(true)}>
+              New Post
+            </button>
+            <FilterBar
+              {...{ setFilteredPosts }}
+              {...{ posts }}
+              {...{ username }}
             />
-          ))}
-        </div>
+          </div>
 
-        {formActive && (
-          <PostForm
-            exitForm={() => setFormActive(false)}
-            action={newPost}
-            {...{ headers }}
-          />
-        )}
-      </div>
-    );
-  }
+          <div className="posts-container">
+            {filteredPosts.map((post) => (
+              <Post
+                {...{ post }}
+                {...{ headers }}
+                {...{ updatePost }}
+                {...{ getPosts }}
+                {...{ deletePost }}
+                {...{ deleteComment }}
+                key={post._id}
+              />
+            ))}
+          </div>
+
+          {formActive && (
+            <PostForm
+              exitForm={() => setFormActive(false)}
+              action={newPost}
+              {...{ headers }}
+            />
+          )}
+        </div>
+      ) : (
+        <LoaderSpinner />
+      )}
+    </div>
+  );
 };
 
 export default Menu;
